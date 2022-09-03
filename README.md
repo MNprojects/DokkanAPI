@@ -1,3 +1,3 @@
 # DokkanAPI
 
-node server.ts
+npm start

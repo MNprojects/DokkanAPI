@@ -1,26 +1,28 @@
-var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+let express = require('express');
+let { graphqlHTTP } = require('express-graphql');
+let { buildSchema } = require('graphql');
+const characterdata: any[] = require("./data/DokkanCharacterData.json")
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+let schema = buildSchema(`
   type Query {
-    character: number
+    characterName(name: String): [String]
   }
 `);
-
+ 
 // The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
+let root = {
+  characterName: (args: any) => {
+    return characterdata.filter((character: { Name: string; }) => character.Name.toLowerCase().includes(args.name.toLowerCase())).map(character => character.Name);
   },
 };
 
-var app = express();
+let app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
 }));
+
 app.listen(8080);
 console.log('Running a GraphQL API server at http://localhost:8080/graphql');
