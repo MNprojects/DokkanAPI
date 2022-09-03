@@ -1,1 +1,3 @@
 # DokkanAPI
+
+node server.ts
