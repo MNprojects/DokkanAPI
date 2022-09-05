@@ -24,5 +24,5 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
 console.log('Running a GraphQL API server at http://localhost:8080/graphql');
