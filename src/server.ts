@@ -1,7 +1,7 @@
 let express = require('express');
 let { graphqlHTTP } = require('express-graphql');
 let { buildSchema } = require('graphql');
-const characterdata: any[] = require("./data/DokkanCharacterData.json")
+const characterdata: any[] = require("../data/DokkanCharacterData.json")
 
 // Construct a schema, using GraphQL schema language
 let schema = buildSchema(`
