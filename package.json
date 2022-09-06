@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node ./lib/server.js",
+    "start": "node ./dist/server.js",
     "build": "tsc"
   },
   "dependencies": {
