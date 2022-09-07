@@ -5,15 +5,21 @@ const characterdata: any[] = require("../data/DokkanCharacterData.json")
 
 // Construct a schema, using GraphQL schema language
 let schema = buildSchema(`
+  type Character {
+    id: String
+    name: String
+    title: String
+  }
+
   type Query {
-    characterName(name: String): [String]
+    character(id: String): Character
   }
 `);
- 
+
 // The root provides a resolver function for each API endpoint
 let root = {
-  characterName: (args: any) => {
-    return characterdata.filter((character: { Name: string; }) => character.Name.toLowerCase().includes(args.name.toLowerCase())).map(character => character.Name);
+  character: ({ id }: { id: String }) => {
+    return characterdata.find((character: { id: string }) => character.id.toLowerCase().includes(id.toLowerCase()));
   },
 };
 
