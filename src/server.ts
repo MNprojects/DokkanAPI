@@ -29,7 +29,7 @@ var queryType = new graphql.GraphQLObjectType({
         title: { type: graphql.GraphQLString }
       },
       resolve: (_notUsed: any, args: any) => {
-        return characterdata.find((character: { id: string }) => character.id.includes(args.id));
+        return characterdata.find((character: { id: string }) => character.id === args.id);
       }
     }
   }
