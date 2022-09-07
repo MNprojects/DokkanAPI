@@ -6,9 +6,6 @@ import { Character, Rarities, Classes, Types, Transformation } from "./character
 
 const characterdata: any[] = require("../data/DokkanCharacterData.json")
 
-
-
-// Define the User type
 var characterType = new graphql.GraphQLObjectType({
   name: 'Character',
   fields: {
@@ -18,7 +15,6 @@ var characterType = new graphql.GraphQLObjectType({
   }
 });
 
-// Define the Query type
 var queryType = new graphql.GraphQLObjectType({
   name: 'Query',
   fields: {
@@ -29,33 +25,15 @@ var queryType = new graphql.GraphQLObjectType({
         title: { type: graphql.GraphQLString }
       },
       resolve: (_notUsed: any, args: any) => {
-        return characterdata.find((character: { id: string }) => character.id === args.id);
+        if(args.)
+        return characterdata.find(character => character.id === args.id);
       }
     }
   }
 });
 
+
 var schema = new graphql.GraphQLSchema({ query: queryType });
-
-// Construct a schema, using GraphQL schema language
-// let schema = buildSchema(`
-//   type Character {
-//     id: String
-//     name: String
-//     title: String
-//   }
-
-//   type Query {
-//     character(id: String): Character
-//   }
-// `);
-
-// The root provides a resolver function for each API endpoint
-// let root = {
-//   character: ({ id }: { id: string }) => {
-//     return characterdata.find((character: { id: string }) => character.id.toLowerCase().includes(id.toLowerCase()));
-//   },
-// };
 
 let app = express();
 app.use('/graphql', graphqlHTTP({
