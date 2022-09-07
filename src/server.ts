@@ -25,7 +25,7 @@ var queryType = new graphql.GraphQLObjectType({
         title: { type: graphql.GraphQLString }
       },
       resolve: (_notUsed: any, args: any) => {
-        if(args.)
+        // if(args){}
         return characterdata.find(character => character.id === args.id);
       }
     }
