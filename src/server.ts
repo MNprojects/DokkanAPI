@@ -2,9 +2,10 @@ let express = require('express');
 let { graphqlHTTP } = require('express-graphql');
 let { buildSchema } = require('graphql');
 var graphql = require('graphql');
+import { GraphQLList } from "graphql";
 import { Character, Rarities, Classes, Types, Transformation } from "./character";
 
-const characterdata: any[] = require("../data/DokkanCharacterData.json")
+const characterData: any[] = require("../data/DokkancharacterData.json")
 
 var characterType = new graphql.GraphQLObjectType({
   name: 'Character',
@@ -34,12 +35,37 @@ var queryType = new graphql.GraphQLObjectType({
         }
 
         if (args.id) {
-          return characterdata.find(character => character.id === args.id);
+          return characterData.find(character => character.id === args.id);
         }
 
         if (args.title) {
-          return characterdata.find(character => character.title.toLowerCase() === args.title.toLowerCase());
+          return characterData.find(character => character.title.toLowerCase() === args.title.toLowerCase());
         }
+      }
+    },
+    characters: {
+      type: new GraphQLList(characterType),
+      args: {
+        name: { type: graphql.GraphQLString },
+        title: { type: graphql.GraphQLString }
+      },
+      // @ts-ignore
+      resolve: (_notUsed, args) => {
+        let result: Character[] = []
+
+        if (args.name) {
+          result = characterData.filter(character => character.name.toLowerCase().includes(args.name.toLowerCase()))
+        }
+
+        if (args.title) {
+          console.log(args.name);
+
+          result = (args.name ? result : characterData).filter(character => character.title.toLowerCase().includes(args.title.toLowerCase()));
+        }
+
+        return result
+
+
       }
     }
   }
