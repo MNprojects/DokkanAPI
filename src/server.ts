@@ -9,7 +9,10 @@ const characterdata: any[] = require("../data/DokkanCharacterData.json")
 var characterType = new graphql.GraphQLObjectType({
   name: 'Character',
   fields: {
-    id: { type: graphql.GraphQLString },
+    id: {
+      type: graphql.GraphQLNonNull(graphql.GraphQLString),
+      description: 'The id of the character'
+    },
     name: { type: graphql.GraphQLString },
     title: { type: graphql.GraphQLString },
   }
@@ -24,9 +27,19 @@ var queryType = new graphql.GraphQLObjectType({
         id: { type: graphql.GraphQLString },
         title: { type: graphql.GraphQLString }
       },
-      resolve: (_notUsed: any, args: any) => {
-        // if(args){}
-        return characterdata.find(character => character.id === args.id);
+      // @ts-ignore
+      resolve: (_notUsed, args) => {
+        if (args.id && args.title) {
+          throw new Error("Can only return character by either id or title, not both at the same time.");
+        }
+
+        if (args.id) {
+          return characterdata.find(character => character.id === args.id);
+        }
+
+        if (args.title) {
+          return characterdata.find(character => character.title.toLowerCase() === args.title.toLowerCase());
+        }
       }
     }
   }
