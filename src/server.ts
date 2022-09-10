@@ -27,6 +27,8 @@ var characterType = new graphql.GraphQLObjectType({
     superAttack: { type: graphql.GraphQLString },
     ultraSuperAttack: { type: graphql.GraphQLString },
     passive: { type: graphql.GraphQLString },
+    activeSkill: { type: graphql.GraphQLString },
+    activeSkillCondition: { type: graphql.GraphQLString },
     links: { type: graphql.GraphQLList(GraphQLString) },
     categories: { type: graphql.GraphQLList(GraphQLString) },
     kiMeter: { type: graphql.GraphQLList(GraphQLString) },
@@ -75,23 +77,29 @@ var queryType = new graphql.GraphQLObjectType({
       type: new GraphQLList(characterType),
       args: {
         name: { type: graphql.GraphQLString },
-        title: { type: graphql.GraphQLString }
+        title: { type: graphql.GraphQLString },
+        rarity: { type: graphql.GraphQLString },
+        class: { type: graphql.GraphQLString },
+        type: { type: graphql.GraphQLString },
+        imageURL: { type: graphql.GraphQLString },
+        leaderSkill: { type: graphql.GraphQLString },
+        superAttack: { type: graphql.GraphQLString },
+        ultraSuperAttack: { type: graphql.GraphQLString },
+        passive: { type: graphql.GraphQLString },
+        activeSkill: { type: graphql.GraphQLString },
+        activeSkillCondition: { type: graphql.GraphQLString },
+        kiMultiplier: { type: graphql.GraphQLString }
       },
       // @ts-ignore
       resolve: (_notUsed, args) => {
-        let result: Character[] = []
-
-        if (args.name) {
-          result = characterData.filter(character => character.name.toLowerCase().includes(args.name.toLowerCase()))
-        }
-
-        if (args.title) {
-          result = (args.name ? result : characterData).filter(character => character.title.toLowerCase().includes(args.title.toLowerCase()));
-        }
-
+        let result: Character[] = characterData;
+        // only works for string based queries because of toLowerCase
+        Object.entries(args).forEach(arg => {
+          result = result.filter(character =>
+            // @ts-ignore
+            character[arg[0]]?.toLowerCase().includes(arg[1].toLowerCase()))
+        });
         return result
-
-
       }
     }
   }
