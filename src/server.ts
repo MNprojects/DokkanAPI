@@ -86,8 +86,6 @@ var queryType = new graphql.GraphQLObjectType({
         }
 
         if (args.title) {
-          console.log(args.name);
-
           result = (args.name ? result : characterData).filter(character => character.title.toLowerCase().includes(args.title.toLowerCase()));
         }
 
