@@ -2,6 +2,7 @@ let express = require('express');
 let { graphqlHTTP } = require('express-graphql');
 let { buildSchema } = require('graphql');
 var graphql = require('graphql');
+import e from "express";
 import { GraphQLList, GraphQLString } from "graphql";
 import { Character, Rarities, Classes, Types, Transformation } from "./character";
 
@@ -88,22 +89,43 @@ var queryType = new graphql.GraphQLObjectType({
         passive: { type: graphql.GraphQLString },
         activeSkill: { type: graphql.GraphQLString },
         activeSkillCondition: { type: graphql.GraphQLString },
-        kiMultiplier: { type: graphql.GraphQLString }
+        kiMultiplier: { type: graphql.GraphQLString },
+        categories: { type: graphql.GraphQLList(graphql.GraphQLString) },
+        links: { type: graphql.GraphQLList(graphql.GraphQLString) },
+
       },
       // @ts-ignore
       resolve: (_notUsed, args) => {
         let result: Character[] = characterData;
         // only works for string based queries because of toLowerCase
         Object.entries(args).forEach(arg => {
-          result = result.filter(character =>
+          if (typeof (arg[1]) === 'string') {
+            result = result.filter(character =>
+              // @ts-ignore
+              character[arg[0]]?.toLowerCase().includes(arg[1].toLowerCase()))
+          }
+          else if (typeof (arg[1]) === 'object') {
             // @ts-ignore
-            character[arg[0]]?.toLowerCase().includes(arg[1].toLowerCase()))
+            result = result.filter(character => compareCharacterLists(arg[1], character[arg[0]]))
+          }
         });
         return result
       }
     }
   }
 });
+
+function compareCharacterLists(searchForList: [], characterList: string[]) {
+  // character needs to be in every category given
+  return searchForList.every(searchListItem => {
+    // only one category needs to match the search category
+    return characterList.some(characterListItem => {
+      // may change this to be exact match rather than includes. Seems more flexible right now
+      // @ts-ignore
+      return characterListItem.toLowerCase().includes(searchListItem.toLowerCase())
+    })
+  });
+}
 
 
 var schema = new graphql.GraphQLSchema({ query: queryType });
