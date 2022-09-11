@@ -292,6 +292,6 @@ npm run dev
 
 # Notes
 
-1. All of the data comes from scraping the Dokkan Wiki: https://dbz-dokkanbattle.fandom.com/wiki/Dragon_Ball_Z_Dokkan_Battle_Wiki .
+1. All of the data comes from scraping the Dokkan Wiki: https://dbz-dokkanbattle.fandom.com/wiki/Dragon_Ball_Z_Dokkan_Battle_Wiki (that project is also on my GitHub).
 I would appreciate it if people could correct any data they find is wrong either on the wiki or let me know about mistakes in the scraping process. The site can be really inconsistent in how it handles the same concept e.g., EZA or transformations. The /data folder in this project has the latest set of data in a json format. I will try to keep this API updated with latest characters are they are uploaded to the wiki but not guarantees.
 2. This is my first real project using the JS/TS ecosystem and GraphQL. I also don't typically  personally release things that I expect others to use. Any feedback on code / style / performance / whatever is appreciated.
