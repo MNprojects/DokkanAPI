@@ -3,10 +3,24 @@ let { graphqlHTTP } = require('express-graphql');
 let { buildSchema } = require('graphql');
 var graphql = require('graphql');
 import e from "express";
-import { GraphQLList, GraphQLString } from "graphql";
+import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 import { Character, Rarities, Classes, Types, Transformation } from "./character";
 
 const characterData: any[] = require("../data/DokkancharacterData.json")
+
+var transformationType = new graphql.GraphQLObjectType({
+  name: 'Transformation',
+  fields: {
+    transformedName: { type: GraphQLString },
+    transformedID: { type: GraphQLString},
+    transformedClass: { type: GraphQLString},
+    transformedType: { type: GraphQLString},
+    transformedSuperAttack: { type: GraphQLString},
+    transformedUltraSuperAttack: { type: GraphQLString},
+    transformedPassive: { type: GraphQLString},
+    
+  }
+})
 
 var characterType = new graphql.GraphQLObjectType({
   name: 'Character',
@@ -15,38 +29,38 @@ var characterType = new graphql.GraphQLObjectType({
       type: graphql.GraphQLNonNull(graphql.GraphQLString),
       description: 'The id of the character'
     },
-    name: { type: graphql.GraphQLString },
-    title: { type: graphql.GraphQLString },
-    maxLevel: { type: graphql.GraphQLInt },
-    maxSALevel: { type: graphql.GraphQLInt },
-    rarity: { type: graphql.GraphQLString },
-    class: { type: graphql.GraphQLString },
-    type: { type: graphql.GraphQLString },
-    cost: { type: graphql.GraphQLInt },
-    imageURL: { type: graphql.GraphQLString },
-    leaderSkill: { type: graphql.GraphQLString },
-    superAttack: { type: graphql.GraphQLString },
-    ultraSuperAttack: { type: graphql.GraphQLString },
-    passive: { type: graphql.GraphQLString },
-    activeSkill: { type: graphql.GraphQLString },
-    activeSkillCondition: { type: graphql.GraphQLString },
-    links: { type: graphql.GraphQLList(GraphQLString) },
-    categories: { type: graphql.GraphQLList(GraphQLString) },
-    kiMeter: { type: graphql.GraphQLList(GraphQLString) },
-    baseHP: { type: graphql.GraphQLInt },
-    maxLevelHP: { type: graphql.GraphQLInt },
-    freeDupeHP: { type: graphql.GraphQLInt },
-    rainbowHP: { type: graphql.GraphQLInt },
-    baseAttack: { type: graphql.GraphQLInt },
-    maxLevelAttack: { type: graphql.GraphQLInt },
-    freeDupeAttack: { type: graphql.GraphQLInt },
-    rainbowAttack: { type: graphql.GraphQLInt },
-    baseDefence: { type: graphql.GraphQLInt },
-    maxDefence: { type: graphql.GraphQLInt },
-    freeDupeDefence: { type: graphql.GraphQLInt },
-    rainbowDefence: { type: graphql.GraphQLInt },
-    kiMultiplier: { type: graphql.GraphQLString },
-    transformations: { type: graphql.GraphQLList(GraphQLString) }
+    name: { type: GraphQLString },
+    title: { type: GraphQLString },
+    maxLevel: { type: GraphQLInt },
+    maxSALevel: { type: GraphQLInt },
+    rarity: { type: GraphQLString },
+    class: { type: GraphQLString },
+    type: { type: GraphQLString },
+    cost: { type: GraphQLInt },
+    imageURL: { type: GraphQLString },
+    leaderSkill: { type: GraphQLString },
+    superAttack: { type: GraphQLString },
+    ultraSuperAttack: { type: GraphQLString },
+    passive: { type: GraphQLString },
+    activeSkill: { type: GraphQLString },
+    activeSkillCondition: { type: GraphQLString },
+    links: { type: GraphQLList(GraphQLString) },
+    categories: { type: GraphQLList(GraphQLString) },
+    kiMeter: { type: GraphQLList(GraphQLString) },
+    baseHP: { type: GraphQLInt },
+    maxLevelHP: { type: GraphQLInt },
+    freeDupeHP: { type: GraphQLInt },
+    rainbowHP: { type: GraphQLInt },
+    baseAttack: { type: GraphQLInt },
+    maxLevelAttack: { type: GraphQLInt },
+    freeDupeAttack: { type: GraphQLInt },
+    rainbowAttack: { type: GraphQLInt },
+    baseDefence: { type: GraphQLInt },
+    maxDefence: { type: GraphQLInt },
+    freeDupeDefence: { type: GraphQLInt },
+    rainbowDefence: { type: GraphQLInt },
+    kiMultiplier: { type: GraphQLString },
+    transformations: { type: GraphQLList(transformationType) }
   }
 });
 
