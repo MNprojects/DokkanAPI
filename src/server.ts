@@ -12,13 +12,13 @@ var transformationType = new graphql.GraphQLObjectType({
   name: 'Transformation',
   fields: {
     transformedName: { type: GraphQLString },
-    transformedID: { type: GraphQLString},
-    transformedClass: { type: GraphQLString},
-    transformedType: { type: GraphQLString},
-    transformedSuperAttack: { type: GraphQLString},
-    transformedUltraSuperAttack: { type: GraphQLString},
-    transformedPassive: { type: GraphQLString},
-    
+    transformedID: { type: GraphQLString },
+    transformedClass: { type: GraphQLString },
+    transformedType: { type: GraphQLString },
+    transformedSuperAttack: { type: GraphQLString },
+    transformedUltraSuperAttack: { type: GraphQLString },
+    transformedPassive: { type: GraphQLString },
+
   }
 })
 
@@ -91,6 +91,7 @@ var queryType = new graphql.GraphQLObjectType({
     characters: {
       type: new GraphQLList(characterType),
       args: {
+        ids: { type: graphql.GraphQLList(graphql.GraphQLString) },
         name: { type: graphql.GraphQLString },
         title: { type: graphql.GraphQLString },
         rarity: { type: graphql.GraphQLString },
@@ -111,6 +112,12 @@ var queryType = new graphql.GraphQLObjectType({
       // @ts-ignore
       resolve: (_notUsed, args) => {
         let result: Character[] = characterData;
+
+        if (args.ids) {
+          result = result.filter(character => args.ids.includes(character.id) )
+          delete args.ids
+        }
+
         // only works for string based queries because of toLowerCase
         Object.entries(args).forEach(arg => {
           if (typeof (arg[1]) === 'string') {
@@ -130,6 +137,7 @@ var queryType = new graphql.GraphQLObjectType({
 });
 
 function compareCharacterLists(searchForList: [], characterList: string[]) {
+
   // character needs to be in every category given
   return searchForList.every(searchListItem => {
     // only one category needs to match the search category
