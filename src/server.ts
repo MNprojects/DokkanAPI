@@ -18,7 +18,7 @@ var transformationType = new graphql.GraphQLObjectType({
     transformedSuperAttack: { type: GraphQLString },
     transformedUltraSuperAttack: { type: GraphQLString },
     transformedPassive: { type: GraphQLString },
-    transformedImageId: { type: GraphQLString },
+    transformedImageURL: { type: GraphQLString },
   }
 })
 

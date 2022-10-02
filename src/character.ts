@@ -73,4 +73,5 @@ export interface Transformation {
     transformedActiveSkill?: string,
     transformedActiveSkillCondition?: string,
     transformedLinks:string[],
+    transformedImageURL: string,
 }
