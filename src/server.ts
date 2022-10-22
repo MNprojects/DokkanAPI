@@ -1,8 +1,9 @@
 let express = require('express');
+let cors = require('cors');
 let { graphqlHTTP } = require('express-graphql');
 let { buildSchema } = require('graphql');
 var graphql = require('graphql');
-import e from "express";
+
 import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 import { Character, Rarities, Classes, Types, Transformation } from "./character";
 
@@ -114,7 +115,7 @@ var queryType = new graphql.GraphQLObjectType({
         let result: Character[] = characterData;
 
         if (args.ids) {
-          result = result.filter(character => args.ids.includes(character.id) )
+          result = result.filter(character => args.ids.includes(character.id))
           delete args.ids
         }
 
@@ -153,10 +154,12 @@ function compareCharacterLists(searchForList: [], characterList: string[]) {
 var schema = new graphql.GraphQLSchema({ query: queryType });
 
 let app = express();
+app.use(cors())
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   graphiql: true,
 }));
+
 
 app.listen(8080);
 console.log('Running a GraphQL API server at http://localhost:8080/graphql');
