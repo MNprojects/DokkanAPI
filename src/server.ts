@@ -154,7 +154,7 @@ function compareCharacterLists(searchForList: [], characterList: string[]) {
 var schema = new graphql.GraphQLSchema({ query: queryType });
 
 let app = express();
-app.use(cors())
+// app.use(cors())
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   graphiql: true,
