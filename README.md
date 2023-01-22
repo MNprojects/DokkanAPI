@@ -276,6 +276,7 @@ Result:
 This beta is to gather feedback to formulate the roadmap so anything here is just possibilities at this point. 
 1. Nothing, it's perfect.
 2. IDK give me some feedback
+3. EZA queries/details. Apparently I completely forgot to add the ability to see and search by EZA.
 
 
 # Instructions for running locally
