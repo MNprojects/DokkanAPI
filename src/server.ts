@@ -7,8 +7,8 @@ var graphql = require('graphql');
 import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 import { Character, Rarities, Classes, Types, Transformation } from "./character";
 
-const characterData: any[] = require("../data/DokkancharacterData.json")
-
+const characterData: Character[] = require("../data/DokkancharacterData.json")
+console.log(characterData.length)
 var transformationType = new graphql.GraphQLObjectType({
   name: 'Transformation',
   fields: {
