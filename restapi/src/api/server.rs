@@ -1,5 +1,8 @@
-use actix_web::{get, Responder, HttpResponse};
 
+
+use actix_web::{get, Responder, HttpResponse};
+mod api {
+    }
 #[get("/")]
 pub async fn index() -> impl Responder {
     

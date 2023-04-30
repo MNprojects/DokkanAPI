@@ -1,11 +1,14 @@
 mod api;
+mod types;
 use actix_web::{App, HttpServer};
 use api::server::index;
 const PORT: u16 = 1000;
-
+use types::enums::Rarities;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("running server at http://localhost:{PORT}/");
+    let a = Rarities::LR;
+    println!("{}",a.as_string());
     HttpServer::new(|| {
         App::new()
             .service(index)

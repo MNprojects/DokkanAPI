@@ -1,7 +1,6 @@
 let express = require('express');
 let cors = require('cors');
 let { graphqlHTTP } = require('express-graphql');
-let { buildSchema } = require('graphql');
 var graphql = require('graphql');
 
 import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
