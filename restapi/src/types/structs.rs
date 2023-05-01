@@ -3,7 +3,9 @@ use super::enums;
 use enums::{ Classes, Types, Rarities };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
+use serde_with::skip_serializing_none;
 
+#[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/Character.ts")]
 pub struct Character {
@@ -49,6 +51,7 @@ pub struct Character {
     kiMultiplier: String,
     transformations: Option<Vec<Transformation>>,
 }
+#[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/interfaces/Transformation.ts")]
 struct Transformation {
@@ -66,4 +69,10 @@ struct Transformation {
     transformedActiveSkillCondition: Option<String>,
     transformedLinks: Vec<String>,
     transformedImageURL: String,
+}
+
+use std::sync::{Arc, RwLock};
+#[derive(Debug)]
+pub struct AppState {
+    pub characters: Arc<RwLock<Vec<Character>>>,
 }

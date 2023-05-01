@@ -1,16 +1,21 @@
 mod api;
 mod types;
-use actix_web::{ App, HttpServer };
+mod readfile;
+use actix_web::{web, App, HttpServer };
 use api::server::index;
-use types::enums::Rarities;
+use types::structs::AppState;
+use readfile::get_content;
+
+
 const PORT: u16 = 1000;
+
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("running server at http://localhost:{PORT}/");
-    let a = Rarities::LR;
-    println!("{}", a.as_string());
-    HttpServer::new(|| { App::new().service(index) })
+
+
+    HttpServer::new(|| { App::new().app_data(web::Data::new(AppState { characters : get_content() })).service(index) })
         .bind(("127.0.0.1", PORT))?
         .run().await
 }
