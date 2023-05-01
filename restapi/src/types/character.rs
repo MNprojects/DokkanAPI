@@ -4,10 +4,8 @@ use enums::{ Classes, Types, Rarities };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
 
-
-
-#[derive(Debug, Deserialize, Serialize,TS)]
-#[ts(export,export_to = "../src/Character.ts")]
+#[derive(Debug, Deserialize, Serialize, TS)]
+#[ts(export, export_to = "../src/Character.ts")]
 pub struct Character {
     name: String,
     title: String,
@@ -49,10 +47,10 @@ pub struct Character {
     freeDupeDefence: i32,
     rainbowDefence: i32,
     kiMultiplier: String,
-    transformations: Option<Vec<Transformation>>
+    transformations: Option<Vec<Transformation>>,
 }
-#[derive(Debug, Deserialize, Serialize,TS)]
-#[ts(export,export_to = "../src/interfaces/Transformation.ts")]
+#[derive(Debug, Deserialize, Serialize, TS)]
+#[ts(export, export_to = "../src/interfaces/Transformation.ts")]
 struct Transformation {
     transformedID: String,
     transformedName: String,

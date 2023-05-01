@@ -1,13 +1,12 @@
-use crate::{impl_enum_as_string };
+use crate::{ impl_enum_as_string };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
-
 
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/interfaces/Classes.ts")]
 pub enum Classes {
     Super,
-    Extreme
+    Extreme,
 }
 
 #[derive(Debug, Deserialize, Serialize, TS)]
@@ -17,14 +16,14 @@ pub enum Types {
     STR,
     AGL,
     TEQ,
-    INT
+    INT,
 }
 
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/interfaces/Rarities.ts")]
 pub enum Rarities {
     UR,
-    LR
+    LR,
 }
 
 impl_enum_as_string!(Types { PHY, STR, AGL, TEQ, INT });
