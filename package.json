@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node ./dist/server.js",
     "build": "tsc",
-    "dev": "nodemon --exec ts-node ./src/server.ts"
+    "dev": "nodemon --exec ts-node ./src/server.ts",
+    "prettier": "prettier --write ./src/**/*.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

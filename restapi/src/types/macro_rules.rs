@@ -1,5 +1,3 @@
-
-
 #[macro_export]
 macro_rules! impl_enum_as_string {
         ($enum_name:ident { $($variant:ident),+ $(,)? }) => {
@@ -14,4 +12,3 @@ macro_rules! impl_enum_as_string {
             }
         };
     }
-
