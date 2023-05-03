@@ -13,7 +13,7 @@ pub fn get_content() -> Arc<RwLock<Vec<Character>>>{
 
     // Parse the JSON contents into a vector of Character
     let characters: Vec<Character> = serde_json::from_str(&contents).expect("Failed to parse JSON");
-    print!("hello wordl");
+    println!("hello wordl");
     // Wrap the Character in an Arc<RwLock<_>> so that they can be shared between threads
     return  Arc::new(RwLock::new(characters));
    

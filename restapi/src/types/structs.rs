@@ -1,10 +1,10 @@
 #![allow(non_snake_case)]
 use super::enums;
-use enums::{ Classes, Types, Rarities };
+use enums::{ Classes, Types, Rarities, SortOptions };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
 use serde_with::skip_serializing_none;
-
+use std::fmt;
 #[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/Character.ts")]
@@ -71,8 +71,33 @@ struct Transformation {
     transformedImageURL: String,
 }
 
-use std::sync::{Arc, RwLock};
+use std::sync::{ Arc, RwLock };
+
 #[derive(Debug)]
 pub struct AppState {
     pub characters: Arc<RwLock<Vec<Character>>>,
+}
+
+#[skip_serializing_none]
+#[derive(Debug,Serialize,Deserialize)]
+pub struct ApiParams {
+    pub name: Option<String>,
+    pub fname: Option<String>,
+    pub title: Option<String>,
+    pub ftitle: Option<String>,
+    pub has_trasformation: Option<bool>,
+    pub sortBy: Option<Vec<SortOptions>>,
+    pub links: Option<Vec<String>>,
+    pub categories: Option<Vec<String>>,
+    pub id: Option<i32>,
+    #[serde(rename = "type")]
+    pub characterType: Option<Types>,
+    pub rarity: Option<Rarities>,
+    pub class: Option<Classes>,
+}
+impl std::fmt::Display for ApiParams {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let a = serde_json::to_string_pretty(&self).unwrap();
+        write!(f, "{}", a)
+    }
 }

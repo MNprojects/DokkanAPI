@@ -3,7 +3,6 @@ use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
 use serde_with::skip_serializing_none;
 
-
 #[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/interfaces/Classes.ts")]
@@ -29,7 +28,27 @@ pub enum Rarities {
     UR,
     LR,
 }
-
+#[skip_serializing_none]
+#[derive(Debug, Deserialize, Serialize)]
+pub enum SortOptions {
+    Name,
+    Title,
+    Rarity,
+    Class,
+    Type,
+    BaseHP,
+    MaxLevelHP,
+    FreeDupeHP,
+    RainbowHP,
+    BaseAttack,
+    MaxLevelAttack,
+    BaseDefence,
+    MaxDefence,
+    FreeDupeDefence,
+    RainbowDefence,
+    Cost,
+}
+impl_enum_as_string!(SortOptions {Name,Title,Rarity,Class,Type,BaseHP,MaxLevelHP,FreeDupeHP,RainbowHP,BaseAttack,MaxLevelAttack,BaseDefence,MaxDefence,FreeDupeDefence,RainbowDefence,Cost});
 impl_enum_as_string!(Types { PHY, STR, AGL, TEQ, INT });
 impl_enum_as_string!(Classes { Super, Extreme });
 impl_enum_as_string!(Rarities { UR, LR });
