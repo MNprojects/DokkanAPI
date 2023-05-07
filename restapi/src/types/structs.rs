@@ -1,10 +1,13 @@
 #![allow(non_snake_case)]
-use super::enums;
-use enums::{ Classes, Types, Rarities, SortOptions };
+use super::enums::{self};
+use enums::{ Classes, Types, Rarities };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
 use serde_with::skip_serializing_none;
 use std::fmt;
+use serde_with::{StringWithSeparator, formats::CommaSeparator};
+
+
 #[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
 #[ts(export, export_to = "../src/Character.ts")]
@@ -78,16 +81,20 @@ pub struct AppState {
     pub characters: Arc<RwLock<Vec<Character>>>,
 }
 
+
+#[serde_with::serde_as]
 #[skip_serializing_none]
 #[derive(Debug,Serialize,Deserialize)]
+#[non_exhaustive]
 pub struct ApiParams {
     pub name: Option<String>,
     pub fname: Option<String>,
     pub title: Option<String>,
     pub ftitle: Option<String>,
     pub has_trasformation: Option<bool>,
-    pub sortBy: Option<Vec<SortOptions>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
     pub links: Option<Vec<String>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
     pub categories: Option<Vec<String>>,
     pub id: Option<i32>,
     #[serde(rename = "type")]
@@ -97,7 +104,6 @@ pub struct ApiParams {
 }
 impl std::fmt::Display for ApiParams {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let a = serde_json::to_string_pretty(&self).unwrap();
-        write!(f, "{}", a)
+        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
     }
 }
