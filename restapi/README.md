@@ -105,5 +105,30 @@ You can filter or sort the character for this categories at `http://localhost:10
 
 Field | Description | example
 ------|------------ | ------
-name | The exact name of the character. You can pass multiple names separated with a "," | `/api/v1/?name=Super%20Saiyan%202%20Vegeta%20(Angel),Broly&20%26&20Cheelai%20%26&20Lemo`
+name  | The exact name of the character. You can pass multiple options separated with a "," | `/api/v1/?name=Broly&20%26&20Cheelai%20%26&20Lemo` is searching for Broly & Cheelai & Lemo
+fname | All the characters names that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?fname=Broly` is searching for all characters that contains Broly in the name
+title | The exact title of the character. You can pass multiple options separated with a "," | `/api/v1/?title=A%20New%2Life%2on%2Vampa` is search for title A New Life on Vampa
+ftitle| All the characters titles that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?ftitle=Kakarot` is searching for all characters that contains Kakarot in the title
+has_trasformation | Show only characters that has a trasformation | `/api/v1/?fname=Goku&has_trasformation` is searching for all Goku characters that has a trasformation 
+num | Show a limit n characters | `/api/v1/?fname=Goku&num=2` show only 2 characters with Goku in their name 
+cost | All the characters that have the specify cost, You can pass multiple options separated with a ","  |  `/api/v1/?cost=77,99` is searching for the characters with cost 77 or 99
+id | The exact id of the character, You can pass multiple options separated with a "," | `/api/v1/?id=1221` is searching for the character with id 1221
+type | All the characters that have the specify type, You can pass multiple options separated with a "," |  `/api/v1/?type=PHY,STR` is searching for all the characters with type PHY or STR
+rarity | All the characters that have the specify rarity | `/api/v1/?type=LR` is searching for all LR characters 
+links | Show all the characters with the specifys links, You can pass multiple names separated with a ","| `/api/v1/?links=Prodigies,Super%20Saiyan` is searching for all characters that has the links Prodigies and Super Saiyan
+categories | Show all the characters with the specifys categories, You can pass multiple names separated with a ","| `/api/v1/?categories=Resurrected%20Warriors,Super%20Saiyan%202` is searching for all characters that has the categories Resurrected Warriors and Super Saiyan 2
+class | Show all the characters with the specify class | `/api/v1/?class=Extreme` is  searching for all Extreme Characters
+sort_by | Sort the characters for a specify order | `/api/v1/?sort_by=MaxLevelAttack` show all the characters sorted by highest Max Level Attack
+reverse | only if sort_by is used, show in reverse order | `/api/v1/?sort_by=MaxLevelAttack&reverse` show all the characters sorted by lowest Max Level Attack
+
+
+### Current options
+Field | Options 
+------|------------ |
+class | Extreme or Super
+rarities | UR or LR
+sort_by | Name, Title, Rarity, Class, Type, BaseHP, MaxLevelHP, FreeDupeHP, RainbowHP, BaseAttack, MaxLevelAttack, BaseDefence, MaxDefence, FreeDupeDefence, RainbowDefence, Cost
+type | PHY, STR, AGL, INT, TEG
+
+
 
