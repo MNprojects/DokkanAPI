@@ -1,5 +1,5 @@
 #![allow(non_snake_case)]
-use super::enums::{self};
+use super::enums::{self, SortOptions};
 use enums::{ Classes, Types, Rarities };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
@@ -87,21 +87,36 @@ pub struct AppState {
 #[derive(Debug,Serialize,Deserialize)]
 #[non_exhaustive]
 pub struct ApiParams {
-    pub name: Option<String>,
-    pub fname: Option<String>,
-    pub title: Option<String>,
-    pub ftitle: Option<String>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
+    pub name: Option<Vec<String>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
+    pub fname: Option<Vec<String>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
+    pub title: Option<Vec<String>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
+    pub ftitle: Option<Vec<String>>,
     pub has_trasformation: Option<bool>,
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
     pub links: Option<Vec<String>>,
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
     pub categories: Option<Vec<String>>,
-    pub id: Option<i32>,
+    pub sort_by: Option<SortOptions>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
+    pub id: Option<Vec<String>>,
     #[serde(rename = "type")]
-    pub characterType: Option<Types>,
+    pub characterType: Option<Vec<Types>>,
     pub rarity: Option<Rarities>,
     pub class: Option<Classes>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, i32>>")]
+    pub num: Option<Vec<i32>>,
+    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, i32>>")]
+    pub cost: Option<Vec<i32>>,
+    pub reverse: Option<bool>
 }
+// TODO
+/*
+#[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")] in type
+ */
 impl std::fmt::Display for ApiParams {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
