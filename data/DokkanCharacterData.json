@@ -29560,24 +29560,7 @@
         "freeDupeDefence": 7039,
         "rainbowDefence": 10439,
         "kiMultiplier": "12 Ki Multiplier is 140%; ",
-        "transformations": [
-            {
-                "transformedName": "Perfect Cell (Angel)",
-                "transformedID": "12060",
-                "transformedSuperAttack": "Raises ATK & DEF[1] and causes supreme damage to enemy",
-                "transformedPassive": "ATK +20% and DEF +15% per Ki Sphere obtained; all allies' Ki +2 with 2 or more  Ki Spheres obtained; attacks effective against all Types when all allies are in the \"Otherworld Warriors\" Category",
-                "transformedLinks": [
-                    "Big Bad Bosses",
-                    "Ultimate Lifeform",
-                    "Fear and Faith",
-                    "Shocking Speed",
-                    "Nightmare",
-                    "Otherworld Warriors",
-                    "Fierce Battle"
-                ],
-                "transformedImageURL": "https://static.wikia.nocookie.net/dbz-dokkanbattle/images/8/88/Card_1020600_thumb_JP.png/revision/latest?cb=20201231110051"
-            }
-        ]
+        "transformations": []
     },
     {
         "name": "Janemba",
