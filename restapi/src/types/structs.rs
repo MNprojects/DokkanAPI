@@ -1,12 +1,11 @@
 #![allow(non_snake_case)]
-use super::enums::{self, SortOptions};
+use super::enums::{ self, SortOptions };
 use enums::{ Classes, Types, Rarities };
 use serde::{ Deserialize, Serialize };
 use ts_rs::TS;
 use serde_with::skip_serializing_none;
 use std::fmt;
-use serde_with::{StringWithSeparator, formats::CommaSeparator};
-
+use serde_with::{ StringWithSeparator, formats::CommaSeparator };
 
 #[skip_serializing_none]
 #[derive(Debug, Deserialize, Serialize, TS)]
@@ -81,10 +80,9 @@ pub struct AppState {
     pub characters: Arc<RwLock<Vec<Character>>>,
 }
 
-
 #[serde_with::serde_as]
 #[skip_serializing_none]
-#[derive(Debug,Serialize,Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct ApiParams {
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
@@ -111,7 +109,7 @@ pub struct ApiParams {
     pub num: Option<Vec<i32>>,
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, i32>>")]
     pub cost: Option<Vec<i32>>,
-    pub reverse: Option<bool>
+    pub reverse: Option<bool>,
 }
 // TODO
 /*

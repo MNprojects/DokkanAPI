@@ -1,29 +1,30 @@
 mod api;
 mod types;
 mod readfile;
-use actix_web::{ web::{self, QueryConfig}, App, HttpServer };
+use actix_web::{ web::{ self, QueryConfig }, App, HttpServer };
 use api::server;
-
+use std::env;
 use types::structs::AppState;
 use readfile::get_content;
 
-const PORT: u16 = 1000;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("running server at http://localhost:{PORT}/");
+    
+    let port = env::var("PORT").expect("not PORT set in ENV").parse::<u16>().expect("PORT ENV not a number");
 
-    HttpServer::new(|| {
+    let httpserver = HttpServer::new(|| {
+        let file_path: String = env::var("JSON_FILE").expect("not JSON_FILE set in ENV");
+        
         App::new()
-            .app_data(
-                QueryConfig
-                    ::default()
-                    .error_handler(server::query_error_handler)
-            )
-            .app_data(web::Data::new(AppState { characters: get_content() }))
+            .app_data(QueryConfig::default().error_handler(server::query_error_handler))
+            .app_data(web::Data::new(AppState { characters: get_content( file_path ) }))
             .service(web::scope("/api/v1").service(server::index))
             .default_service(web::to(server::fallback))
-    })
-        .bind(("127.0.0.1", PORT))?
-        .run().await
+    }).bind(("127.0.0.1", port))?;
+
+    let server_addr: Vec<std::net::SocketAddr> = httpserver.addrs();
+    
+    println!("\tRunning server at http://{:?}/",server_addr.first().unwrap());
+    httpserver.run().await
 }

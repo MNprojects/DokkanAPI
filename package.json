@@ -3,7 +3,7 @@
     "start": "node ./dist/server.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node ./src/server.ts",
-    "prettier": "prettier --write ./src/**/*.ts && prettier --write ./restapi/src/**/*.rs"
+    "format": "prettier --write ./src/**/*.ts && prettier --write ./restapi/src/**/*.rs"
   },
   "dependencies": {
     "cors": "^2.8.5",
