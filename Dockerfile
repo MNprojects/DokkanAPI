@@ -15,13 +15,16 @@ RUN npm run build
 FROM rust:1.54 AS rust-app
 WORKDIR /
 RUN apt-get update && apt-get install -y libssl-dev
+RUN rustup update
+RUN rustup default nightly
+RUN rustup target add x86_64-unknown-linux-musl
 COPY ./restapi .
 RUN cargo build --release
 
 
 # Final image
 FROM alpine:latest
-WORKDIR /app
+WORKDIR /
 COPY --from=node-app ./dist ./dist
 COPY --from=rust-app /restapi/target/release/restapi ./restapi
 ENV JSON_FILE=DokkanCharacterData.json

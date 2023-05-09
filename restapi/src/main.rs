@@ -14,11 +14,11 @@ async fn main() -> std::io::Result<()> {
     let port = env::var("PORT").expect("not PORT set in ENV").parse::<u16>().expect("PORT ENV not a number");
 
     let httpserver = HttpServer::new(|| {
-        let file_path: String = env::var("JSON_FILE").expect("not JSON_FILE set in ENV");
+        let file_name: String = env::var("JSON_FILE").expect("not JSON_FILE set in ENV");
         
         App::new()
             .app_data(QueryConfig::default().error_handler(server::query_error_handler))
-            .app_data(web::Data::new(AppState { characters: get_content( file_path ) }))
+            .app_data(web::Data::new(AppState { characters: get_content( file_name ) }))
             .service(web::scope("/api/v1").service(server::index))
             .default_service(web::to(server::fallback))
     }).bind(("127.0.0.1", port))?;
