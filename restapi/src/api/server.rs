@@ -1,4 +1,5 @@
-use crate::types::structs::{ AppState, ApiParams, Character };
+use crate::{types::structs::{ AppState, ApiParams, Character }, api::lib::apply_filters};
+
 use actix_web::{
     web,
     get,
@@ -16,6 +17,8 @@ pub async fn index(
 ) -> HttpResponse {
     let characters: &Vec<Character> = &*state.characters.read().unwrap();
     println!("{}", params);
+    apply_filters(params, characters);
+
 
     HttpResponse::Ok().content_type("application/json").json(characters)
 }
