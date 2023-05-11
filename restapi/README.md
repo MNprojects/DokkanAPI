@@ -105,7 +105,7 @@ You can filter or sort the character for this categories at `http://localhost:10
 
 Field | Description | example
 ------|------------ | ------
-name  | The exact name of the character. You can pass multiple options separated with a "," | `/api/v1/?name=Broly&20%26&20Cheelai%20%26&20Lemo` is searching for Broly & Cheelai & Lemo
+name  | The exact name of the character. You can pass multiple options separated with a "," | `/api/v1/?name=Broly %26 Cheelai %26 Lemo` is searching for Broly & Cheelai & Lemo
 fname | All the characters names that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?fname=Broly` is searching for all characters that contains Broly in the name
 title | The exact title of the character. You can pass multiple options separated with a "," | `/api/v1/?title=A%20New%2Life%2on%2Vampa` is search for title A New Life on Vampa
 ftitle| All the characters titles that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?ftitle=Kakarot` is searching for all characters that contains Kakarot in the title

@@ -1,6 +1,6 @@
 [package]
 name = "restapi"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -11,3 +11,4 @@ ts-rs = "6.2.1"
 serde = { version = "1.0.144", features = ["derive"] }
 serde_json = { version = "1.0.85", features = ["preserve_order"] }
 serde_with = "3.0.0"
+dotenv = "0.15.0"

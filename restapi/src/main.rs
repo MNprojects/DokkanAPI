@@ -6,10 +6,11 @@ use api::server;
 use std::env;
 use types::structs::AppState;
 use readfile::get_content;
-
+use dotenv::dotenv;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    dotenv().ok();
     
     let port = env::var("PORT").expect("not PORT set in ENV").parse::<u16>().expect("PORT ENV not a number");
 

@@ -17,10 +17,10 @@ pub async fn index(
 ) -> HttpResponse {
     let characters: &Vec<Character> = &*state.characters.read().unwrap();
     println!("{}", params);
-    apply_filters(params, characters);
+    let filter_characters = apply_filters(params, characters);
 
 
-    HttpResponse::Ok().content_type("application/json").json(characters)
+    HttpResponse::Ok().content_type("application/json").json(filter_characters)
 }
 
 pub async fn fallback() -> HttpResponse {

@@ -4,7 +4,7 @@ pub fn apply_filters(params: ApiParams, characters: & Vec<Character>) -> Vec<& C
     let filtered_characters = characters
         .iter()
         .filter(|&character| {
-            let mut matched = false;
+            let mut matched = true;
             if let Some(name) = &params.name {
                 matched &= name.contains(&character.name.as_ref().unwrap())
             }
