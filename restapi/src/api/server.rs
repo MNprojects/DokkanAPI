@@ -2,7 +2,6 @@ use crate::{types::structs::{ AppState, ApiParams, Character }, api::lib::apply_
 
 use actix_web::{
     web,
-    get,
     HttpResponse,
     error::{ QueryPayloadError, InternalError },
     HttpRequest,
@@ -10,7 +9,7 @@ use actix_web::{
 };
 use serde_json::{ json };
 
-#[get("/")]
+
 pub async fn index(
     state: web::Data<AppState>,
     web::Query(params): web::Query<ApiParams>

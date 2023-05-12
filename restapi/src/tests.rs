@@ -1,15 +1,16 @@
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::server::index;
     use actix_web::{ http::{ self, header::ContentType }, test };
-    #[actix_web::test]
+    #[test]
     async fn test_filter_by_name() {
         let req = test::TestRequest
             ::default()
             .insert_header(ContentType::plaintext())
             .to_http_request();
-        let resp = index(req).await;
-        assert_eq!(resp.status(), http::StatusCode::OK);
+        println!("jjj");
+        let resp = index().await;
+        assert_eq!(1, http::StatusCode::OK);
     }
 
     #[actix_web::test]

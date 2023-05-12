@@ -1,4 +1,5 @@
 mod api;
+mod tests;
 mod types;
 mod readfile;
 use actix_web::{ web::{ self, QueryConfig }, App, HttpServer };
@@ -20,7 +21,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(QueryConfig::default().error_handler(server::query_error_handler))
             .app_data(web::Data::new(AppState { characters: get_content( file_name ) }))
-            .service(web::scope("/api/v1").service(server::index))
+            .service(web::scope("/api/v1").service(web::resource("/").route(web::get().to(server::index))  ))
             .default_service(web::to(server::fallback))
     }).bind(("127.0.0.1", port))?;
 
