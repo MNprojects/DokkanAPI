@@ -1,16 +1,23 @@
 #[cfg(test)]
 mod tests {
     use crate::server::index;
-    use actix_web::{ http::{ self, header::ContentType }, test };
+    use crate::types::structs::AppState;
+    use actix_web::{ http::{ header::ContentType }, test, App, web };
+
+    use once_cell::sync::Lazy;
+
+    static APP_STATE: Lazy<AppState> = Lazy::new(|| {
+        // Initialize your AppState here, e.g., by reading the long file
+        AppState::new()
+    });
     #[test]
-    async fn test_filter_by_name() {
-        let req = test::TestRequest
-            ::default()
+    async fn test_index_get() {
+        let app = test::init_service(App::new().route("/", web::get().to(index))).await;
+        let req = test::TestRequest::default()
             .insert_header(ContentType::plaintext())
-            .to_http_request();
-        println!("jjj");
-        let resp = index().await;
-        assert_eq!(1, http::StatusCode::OK);
+            .to_request();
+        let resp = test::call_service(&app, req).await;
+        assert!(resp.status().is_success());
     }
 
     #[actix_web::test]
