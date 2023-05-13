@@ -105,8 +105,7 @@ pub struct ApiParams {
     pub characterType: Option<Vec<Types>>,
     pub rarity: Option<Rarities>,
     pub class: Option<Classes>,
-    #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, i32>>")]
-    pub num: Option<Vec<i32>>,
+    pub num: Option<usize>,
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, i32>>")]
     pub cost: Option<Vec<i32>>,
     pub reverse: Option<bool>,

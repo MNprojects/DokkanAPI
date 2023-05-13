@@ -15,10 +15,14 @@ pub async fn index(
     web::Query(params): web::Query<ApiParams>
 ) -> HttpResponse {
     let characters: &Vec<Character> = &*state.characters.read().unwrap();
+   
     println!("{}", params);
     let filter_characters = apply_filters(params.clone(), characters);
-    let sort_characters = apply_sort(params,filter_characters);
-    
+    let mut sort_characters = apply_sort(params.clone(),filter_characters);
+    if let Some(num) = &params.num {
+        sort_characters = sort_characters.iter().copied().take(*num).collect::<Vec<_>>();
+
+    }
     HttpResponse::Ok().content_type("application/json").json(sort_characters)
 }
 
