@@ -1,4 +1,4 @@
-use crate::{types::structs::{ AppState, ApiParams, Character }, api::lib::apply_filters};
+use crate::{types::structs::{ AppState, ApiParams, Character }, api::lib::{apply_filters,apply_sort}};
 
 use actix_web::{
     web,
@@ -16,10 +16,10 @@ pub async fn index(
 ) -> HttpResponse {
     let characters: &Vec<Character> = &*state.characters.read().unwrap();
     println!("{}", params);
-    let filter_characters = apply_filters(params, characters);
-
-
-    HttpResponse::Ok().content_type("application/json").json(filter_characters)
+    let filter_characters = apply_filters(params.clone(), characters);
+    let sort_characters = apply_sort(params,filter_characters);
+    
+    HttpResponse::Ok().content_type("application/json").json(sort_characters)
 }
 
 pub async fn fallback() -> HttpResponse {

@@ -82,7 +82,7 @@ pub struct AppState {
 
 #[serde_with::serde_as]
 #[skip_serializing_none]
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize,Clone)]
 #[non_exhaustive]
 pub struct ApiParams {
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]
@@ -111,10 +111,7 @@ pub struct ApiParams {
     pub cost: Option<Vec<i32>>,
     pub reverse: Option<bool>,
 }
-// TODO
-/*
-#[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")] in type
- */
+
 impl std::fmt::Display for ApiParams {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())

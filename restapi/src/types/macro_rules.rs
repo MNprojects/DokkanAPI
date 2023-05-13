@@ -11,3 +11,9 @@ macro_rules! impl_enum_as_string {
         }
     };
 }
+#[macro_export]
+macro_rules! sort_by_field {
+    ($field:ident, $a:expr, $b:expr) => {
+        $a.$field.cmp(&$b.$field)
+    };
+}

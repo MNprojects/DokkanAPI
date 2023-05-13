@@ -119,7 +119,7 @@ links | Show all the characters with the specifys links, You can pass multiple n
 categories | Show all the characters with the specifys categories, You can pass multiple names separated with a ","| `/api/v1/?categories=Resurrected%20Warriors,Super%20Saiyan%202` is searching for all characters that has the categories Resurrected Warriors and Super Saiyan 2
 class | Show all the characters with the specify class | `/api/v1/?class=Extreme` is  searching for all Extreme Characters
 sort_by | Sort the characters for a specify order | `/api/v1/?sort_by=MaxLevelAttack` show all the characters sorted by highest Max Level Attack
-reverse | only if sort_by is used, show in reverse order | `/api/v1/?sort_by=MaxLevelAttack&reverse` show all the characters sorted by lowest Max Level Attack
+reverse | only if sort_by is used, show in reverse order | `/api/v1/?sort_by=MaxLevelAttack&reverse=true` show all the characters sorted by lowest Max Level Attack
 
 
 ### Current options

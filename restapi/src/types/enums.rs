@@ -4,14 +4,14 @@ use ts_rs::TS;
 use serde_with::skip_serializing_none;
 
 #[skip_serializing_none]
-#[derive(Debug, Deserialize, Serialize, TS)]
+#[derive(Debug, Deserialize, Serialize, TS,Ord,PartialEq, PartialOrd,Eq,Clone)]
 #[ts(export, export_to = "../src/interfaces/Classes.ts")]
 pub enum Classes {
     Super,
     Extreme,
 }
 #[skip_serializing_none]
-#[derive(Debug, Deserialize, Serialize, TS)]
+#[derive(Debug, Deserialize, Serialize, TS,Ord,PartialEq, PartialOrd,Eq,Clone)]
 #[ts(export, export_to = "../src/interfaces/Types.ts")]
 pub enum Types {
     PHY,
@@ -22,14 +22,14 @@ pub enum Types {
 }
 
 #[skip_serializing_none]
-#[derive(Debug, Deserialize, Serialize, TS)]
+#[derive(Debug, Deserialize, Serialize, TS,Ord,PartialEq, PartialOrd,Eq,Clone)]
 #[ts(export, export_to = "../src/interfaces/Rarities.ts")]
 pub enum Rarities {
     UR,
     LR,
 }
 #[skip_serializing_none]
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize,Clone)]
 pub enum SortOptions {
     Name,
     Title,
