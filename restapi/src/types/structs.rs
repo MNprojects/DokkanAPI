@@ -25,9 +25,9 @@ pub struct Character {
     pub leaderSkill: Option<String>,
     pub ezaLeaderSkill: Option<String>,
     pub superAttack: Option<String>,
-    pub ezaSuperAttack:Option<String>,
-    pub ultraSuperAttack:Option<String>,
-    pub ezaUltraSuperAttack:Option<String>,
+    pub ezaSuperAttack: Option<String>,
+    pub ultraSuperAttack: Option<String>,
+    pub ezaUltraSuperAttack: Option<String>,
     pub passive: Option<String>,
     pub ezaPassive: Option<String>,
     pub activeSkill: Option<String>,
@@ -82,7 +82,7 @@ pub struct AppState {
 
 #[serde_with::serde_as]
 #[skip_serializing_none]
-#[derive(Debug, Serialize, Deserialize,Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[non_exhaustive]
 pub struct ApiParams {
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, String>>")]

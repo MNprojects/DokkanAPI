@@ -1,6 +1,5 @@
 #[cfg(test)]
 mod tests {
-
     use std::sync::Arc;
 
     use crate::server::index;
@@ -10,8 +9,8 @@ mod tests {
 
     use once_cell::sync::Lazy;
     static APP_STATE: Lazy<Arc<AppState>> = Lazy::new(|| {
-        Arc::new(AppState{
-            characters: get_content(String::from("test.json"))
+        Arc::new(AppState {
+            characters: get_content(String::from("test.json")),
         })
     });
 
@@ -19,11 +18,13 @@ mod tests {
     async fn test_index_get() {
         std::env::set_var("RUST_LOG", "debug");
         env_logger::init();
-        let app = test::init_service(App::new().app_data(web::Data::new(APP_STATE.clone())).route("/", web::get().to(index))).await;
+        let app = test::init_service(
+            App::new().app_data(web::Data::new(APP_STATE.clone())).route("/", web::get().to(index))
+        ).await;
         let req = test::TestRequest::get().uri("/").to_request();
         let resp = test::call_service(&app, req).await;
-        let body= test::read_body(resp).await;
-        eprintln!("{:?}",body);
+        let body = test::read_body(resp).await;
+        eprintln!("{:?}", body);
         todo!("");
         // assert_eq!(200,200);
     }

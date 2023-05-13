@@ -1,51 +1,64 @@
-use crate::{types::{structs::{Character, ApiParams}, enums::SortOptions}, sort_by_field};
+use crate::{ types::{ structs::{ Character, ApiParams }, enums::SortOptions }, sort_by_field };
 
-pub fn apply_filters(params: ApiParams, characters: & Vec<Character>) -> Vec<& Character> {
+pub fn apply_filters(params: ApiParams, characters: &Vec<Character>) -> Vec<&Character> {
     let filtered_characters = characters
         .iter()
         .filter(|&character| {
             let mut matched = true;
             if let Some(name) = &params.name {
-                matched &= name.iter().any(|n| character.name.as_ref().unwrap() == n)
+                matched &= name.iter().any(|n| character.name.as_ref().unwrap() == n);
             }
             if let Some(fname) = &params.fname {
-                matched &= fname.iter().any(|fnm| character.name.as_ref().unwrap().contains(fnm))
+                matched &= fname.iter().any(|fnm| character.name.as_ref().unwrap().contains(fnm));
             }
             if let Some(class) = &params.class {
                 matched &= character.class.as_ref().unwrap().as_string() == class.as_string();
             }
             if let Some(rarity) = &params.rarity {
-                matched &=  character.rarity.as_ref().unwrap().as_string() ==  rarity.as_string()
+                matched &= character.rarity.as_ref().unwrap().as_string() == rarity.as_string();
             }
             if let Some(title) = &params.title {
-                matched &= title.iter().any(|n| character.title.as_ref().unwrap() == n)
+                matched &= title.iter().any(|n| character.title.as_ref().unwrap() == n);
             }
             if let Some(ftitle) = &params.ftitle {
-                matched &= ftitle.iter().any(|fnm| character.title.as_ref().unwrap().contains(fnm))
+                matched &= ftitle.iter().any(|fnm| character.title.as_ref().unwrap().contains(fnm));
             }
             if let Some(r#type) = &params.characterType {
-                matched &= r#type.iter().any(|typ| character.characterType.as_ref().unwrap().as_string() == typ.as_string())
+                matched &= r#type
+                    .iter()
+                    .any(
+                        |typ|
+                            character.characterType.as_ref().unwrap().as_string() == typ.as_string()
+                    );
             }
             if let Some(cost) = &params.cost {
-                matched &= cost.iter().any(|c| character.cost.as_ref().unwrap() == c)
+                matched &= cost.iter().any(|c| character.cost.as_ref().unwrap() == c);
             }
             if let Some(id) = &params.id {
-                matched &= id.iter().any(|c| character.id.as_ref().unwrap() == c)
+                matched &= id.iter().any(|c| character.id.as_ref().unwrap() == c);
             }
-           
+
             if let Some(has_transformation) = params.has_trasformation {
-                
-                matched &= character.transformations.as_ref().unwrap().is_empty() != has_transformation
+                matched &=
+                    character.transformations.as_ref().unwrap().is_empty() != has_transformation;
             }
             if let Some(categories) = &params.categories {
                 matched &= categories.iter().any(|category| {
-                    character.categories.as_ref().unwrap().iter().any(|c| c == category)
-                })
+                    character.categories
+                        .as_ref()
+                        .unwrap()
+                        .iter()
+                        .any(|c| c == category)
+                });
             }
             if let Some(links) = &params.links {
                 matched &= links.iter().any(|link| {
-                    character.links.as_ref().unwrap().iter().any(|l| l == link)
-                })
+                    character.links
+                        .as_ref()
+                        .unwrap()
+                        .iter()
+                        .any(|l| l == link)
+                });
             }
             matched
         })
@@ -54,10 +67,9 @@ pub fn apply_filters(params: ApiParams, characters: & Vec<Character>) -> Vec<& C
     filtered_characters // return a reference to the new vector
 }
 
-pub fn apply_sort(params: ApiParams, mut characters: Vec<&Character>) -> Vec<&Character>{
-
+pub fn apply_sort(params: ApiParams, mut characters: Vec<&Character>) -> Vec<&Character> {
     if let Some(sort_by) = &params.sort_by {
-       characters.sort_by(|a, b| {
+        characters.sort_by(|a, b| {
             match sort_by {
                 SortOptions::Name => sort_by_field!(name, a, b),
                 SortOptions::Title => sort_by_field!(title, a, b),
@@ -79,7 +91,9 @@ pub fn apply_sort(params: ApiParams, mut characters: Vec<&Character>) -> Vec<&Ch
         });
     }
     match params.reverse {
-        Some(_) => {characters.reverse()}
+        Some(_) => {
+            characters.reverse();
+        }
         None => {}
     }
     characters
