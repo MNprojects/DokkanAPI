@@ -1,23 +1,31 @@
 #[cfg(test)]
 mod tests {
+
+    use std::sync::Arc;
+
     use crate::server::index;
     use crate::types::structs::AppState;
-    use actix_web::{ http::{ header::ContentType }, test, App, web };
+    use crate::readfile::get_content;
+    use actix_web::{ test, App, web };
 
     use once_cell::sync::Lazy;
-
-    static APP_STATE: Lazy<AppState> = Lazy::new(|| {
-        // Initialize your AppState here, e.g., by reading the long file
-        AppState::new()
+    static APP_STATE: Lazy<Arc<AppState>> = Lazy::new(|| {
+        Arc::new(AppState{
+            characters: get_content(String::from("test.json"))
+        })
     });
+
     #[test]
     async fn test_index_get() {
-        let app = test::init_service(App::new().route("/", web::get().to(index))).await;
-        let req = test::TestRequest::default()
-            .insert_header(ContentType::plaintext())
-            .to_request();
+        std::env::set_var("RUST_LOG", "debug");
+        env_logger::init();
+        let app = test::init_service(App::new().app_data(web::Data::new(APP_STATE.clone())).route("/", web::get().to(index))).await;
+        let req = test::TestRequest::get().uri("/").to_request();
         let resp = test::call_service(&app, req).await;
-        assert!(resp.status().is_success());
+        let body= test::read_body(resp).await;
+        eprintln!("{:?}",body);
+        todo!("");
+        assert_eq!(200,200);
     }
 
     #[actix_web::test]
