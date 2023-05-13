@@ -109,7 +109,7 @@ name  | The exact name of the character. You can pass multiple options separated
 fname | All the characters names that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?fname=Broly` is searching for all characters that contains Broly in the name
 title | The exact title of the character. You can pass multiple options separated with a "," | `/api/v1/?title=A%20New%2Life%2on%2Vampa` is search for title A New Life on Vampa
 ftitle| All the characters titles that contains the string given, You can pass multiple options separated with a "," | `/api/v1/?ftitle=Kakarot` is searching for all characters that contains Kakarot in the title
-has_trasformation | Show only characters that has a trasformation | `/api/v1/?fname=Goku&has_trasformation=true` is searching for all Goku characters that has a trasformation 
+has_trasformation | Show only characters with or without transformations | `/api/v1/?fname=Goku&has_trasformation=false` is searching for all Goku characters that dont have a trasformation 
 num | Show a limit n characters | `/api/v1/?fname=Goku&num=2` show only 2 characters with Goku in their name 
 cost | All the characters that have the specify cost, You can pass multiple options separated with a ","  |  `/api/v1/?cost=77,99` is searching for the characters with cost 77 or 99
 id | The exact id of the character, You can pass multiple options separated with a "," | `/api/v1/?id=1221` is searching for the character with id 1221

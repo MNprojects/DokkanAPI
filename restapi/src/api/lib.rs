@@ -32,8 +32,10 @@ pub fn apply_filters(params: ApiParams, characters: & Vec<Character>) -> Vec<& C
             if let Some(id) = &params.id {
                 matched &= id.iter().any(|c| character.id.as_ref().unwrap() == c)
             }
+           
             if let Some(has_transformation) = params.has_trasformation {
-                matched &= character.transformations.is_some() == has_transformation
+                
+                matched &= character.transformations.as_ref().unwrap().is_empty() != has_transformation
             }
             if let Some(categories) = &params.categories {
                 matched &= categories.iter().any(|category| {
@@ -76,8 +78,9 @@ pub fn apply_sort(params: ApiParams, mut characters: Vec<&Character>) -> Vec<&Ch
             }
         });
     }
-    if params.reverse.unwrap() {
-        characters.reverse()
+    match params.reverse {
+        Some(_) => {characters.reverse()}
+        None => {}
     }
     characters
 }
