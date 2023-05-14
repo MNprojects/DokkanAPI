@@ -271,6 +271,9 @@ Result:
           "Power Beyond Super Saiyan"
         ]
       }
+    ]
+  }
+}
 ```
 # Roadmap
 This beta is to gather feedback to formulate the roadmap so anything here is just possibilities at this point. 

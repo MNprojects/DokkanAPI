@@ -1,14 +1,14 @@
 let express = require('express');
 let cors = require('cors');
 let { graphqlHTTP } = require('express-graphql');
-let { buildSchema } = require('graphql');
 var graphql = require('graphql');
 
-import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
-import { Character, Rarities, Classes, Types, Transformation } from "./character";
+import { GraphQLList, GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
+import { Character } from './character';
+import { Rarities, Classes, Types, Transformation } from './interfaces';
 
-const characterData: any[] = require("../data/DokkancharacterData.json")
-
+const characterData: Character[] = require('../data/DokkancharacterData.json');
+console.log(characterData.length);
 var transformationType = new graphql.GraphQLObjectType({
   name: 'Transformation',
   fields: {
@@ -20,15 +20,15 @@ var transformationType = new graphql.GraphQLObjectType({
     transformedUltraSuperAttack: { type: GraphQLString },
     transformedPassive: { type: GraphQLString },
     transformedImageURL: { type: GraphQLString },
-  }
-})
+  },
+});
 
 var characterType = new graphql.GraphQLObjectType({
   name: 'Character',
   fields: {
     id: {
       type: graphql.GraphQLNonNull(graphql.GraphQLString),
-      description: 'The id of the character'
+      description: 'The id of the character',
     },
     name: { type: GraphQLString },
     title: { type: GraphQLString },
@@ -61,8 +61,8 @@ var characterType = new graphql.GraphQLObjectType({
     freeDupeDefence: { type: GraphQLInt },
     rainbowDefence: { type: GraphQLInt },
     kiMultiplier: { type: GraphQLString },
-    transformations: { type: GraphQLList(transformationType) }
-  }
+    transformations: { type: GraphQLList(transformationType) },
+  },
 });
 
 var queryType = new graphql.GraphQLObjectType({
@@ -72,22 +72,22 @@ var queryType = new graphql.GraphQLObjectType({
       type: characterType,
       args: {
         id: { type: graphql.GraphQLString },
-        title: { type: graphql.GraphQLString }
+        title: { type: graphql.GraphQLString },
       },
       // @ts-ignore
       resolve: (_notUsed, args) => {
         if (args.id && args.title) {
-          throw new Error("Can only return character by either id or title, not both at the same time.");
+          throw new Error('Can only return character by either id or title, not both at the same time.');
         }
 
         if (args.id) {
-          return characterData.find(character => character.id === args.id);
+          return characterData.find((character) => character.id === args.id);
         }
 
         if (args.title) {
-          return characterData.find(character => character.title.toLowerCase() === args.title.toLowerCase());
+          return characterData.find((character) => character.title.toLowerCase() === args.title.toLowerCase());
         }
-      }
+      },
     },
     characters: {
       type: new GraphQLList(characterType),
@@ -108,58 +108,57 @@ var queryType = new graphql.GraphQLObjectType({
         kiMultiplier: { type: graphql.GraphQLString },
         categories: { type: graphql.GraphQLList(graphql.GraphQLString) },
         links: { type: graphql.GraphQLList(graphql.GraphQLString) },
-
       },
       // @ts-ignore
       resolve: (_notUsed, args) => {
         let result: Character[] = characterData;
 
         if (args.ids) {
-          result = result.filter(character => args.ids.includes(character.id))
-          delete args.ids
+          result = result.filter((character) => args.ids.includes(character.id));
+          delete args.ids;
         }
 
         // only works for string based queries because of toLowerCase
-        Object.entries(args).forEach(arg => {
-          if (typeof (arg[1]) === 'string') {
-            result = result.filter(character =>
+        Object.entries(args).forEach((arg) => {
+          if (typeof arg[1] === 'string') {
+            result = result.filter((character) =>
               // @ts-ignore
-              character[arg[0]]?.toLowerCase().includes(arg[1].toLowerCase()))
-          }
-          else if (typeof (arg[1]) === 'object') {
+              character[arg[0]]?.toLowerCase().includes(arg[1].toLowerCase()),
+            );
+          } else if (typeof arg[1] === 'object') {
             // @ts-ignore
-            result = result.filter(character => compareCharacterLists(arg[1], character[arg[0]]))
+            result = result.filter((character) => compareCharacterLists(arg[1], character[arg[0]]));
           }
         });
-        return result
-      }
-    }
-  }
+        return result;
+      },
+    },
+  },
 });
 
 function compareCharacterLists(searchForList: [], characterList: string[]) {
-
   // character needs to be in every category given
-  return searchForList.every(searchListItem => {
+  return searchForList.every((searchListItem) => {
     // only one category needs to match the search category
-    return characterList.some(characterListItem => {
+    return characterList.some((characterListItem) => {
       // may change this to be exact match rather than includes. Seems more flexible right now
       // @ts-ignore
-      return characterListItem.toLowerCase().includes(searchListItem.toLowerCase())
-    })
+      return characterListItem.toLowerCase().includes(searchListItem.toLowerCase());
+    });
   });
 }
-
 
 var schema = new graphql.GraphQLSchema({ query: queryType });
 
 let app = express();
-app.use(cors())
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  graphiql: true,
-}));
-
+app.use(cors());
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  }),
+);
 
 app.listen(8080);
 console.log('Running a GraphQL API server at http://localhost:8080/graphql');
